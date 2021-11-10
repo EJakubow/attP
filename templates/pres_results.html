@@ -10,49 +10,42 @@
   <meta charset="utf-8">
 <div class="page-header">
   <body>
-    <h1> Presidential Database Search Results </h1>
-    <p> Project Template </p>
+    <h1> attp Search Results </h1>
+    <p> Esther Jakubowicz </p>
 </div>
 </head>
 <div class="container">
-Value of form variables:
-<p>
-name1= {{name1}}
-<p>
-name2= {{name2}}
-<p>
-name3= {{name3}}
-<p>
-name4= {{name4}}
-<p>
+<!--Value of form variables:-->
+<!--<p>-->
+<!--name1= {{name1}}-->
+<!--<p>-->
+<!--name2= {{name2}}-->
+<!--<p>-->
+<!--name3= {{name3}}-->
+<!--<p>-->
+<!--name4= {{name4}}-->
+<!--<p>-->
 
-<h2>List of Presidents </h2>
+<h2>Results </h2>
 
 <div class="table-responsive">
   <table class="table">
     <thead class="thead-dark">
       <tr>
-        <th>#</th>
-        <th>Last Name</th>
-        <th>First Name</th>
-        <th>Suffix</th>
-        <th>City</th>
-        <th>State</th>
-        <th>Birth Date</th>
-        <th>Death Date</th>
-      </tr>
+        <th>Accession Number</th>
+        <th>Name</th>
+        <th>attp Sequence</th>
+        <th>Score</th>
+         </tr>
     </thead>
     <tbody>
        {% for item in presults %}
            <tr>
-             <td>{{item.id}}</td>
-             <td>{{item.last_name}}</td>
-             <td>{{item.first_name}}</td>
-             <td>{{item.suffix}}</td>
-             <td>{{item.city}}</td>
-             <td>{{item.state}}</td>
-             <td>{{item.birth}}</td>
-             <td>{{item.death}}</td>
+             <td>{{ item[0] }}</td>
+             <td>{{ item[1] }}</td>
+             <td>{{ item[2] }}</td>
+             <td>{{ item[3] }}</td>
+
            </tr>
         {% endfor %}
    </tbody>

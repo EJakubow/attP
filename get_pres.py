@@ -31,11 +31,11 @@ class SearchButton_Form(FlaskForm):
 
 
 class NameForm(FlaskForm):
-    name2 = RadioField('Search by First or Last Name:', choices=[('first_name', 'First Name'), ('last_name', 'Last Name')])
-    name1 = StringField('Enter a name:', validators=[DataRequired()])
-    name3 = SelectField('Limit results by:', choices=[('1', '1'), ('5', '5'), ('10', '10'),('50', '50')])
-    name4 = SelectField('Order results by:', choices=[('first_name', 
-            'First Name'), ('last_name', 'Last Name'), ('city', 'City of Birth')])
+    name2 = RadioField('Search by Virus or Bacteria:', choices=[('virus', 'Virus'), ('Bacteria', 'Bacteria')])
+    name1 = StringField('Enter an Accession number or FASTA sequence:', validators=[DataRequired()])
+    #name3 = SelectField('Limit results by:', choices=[('1', '1'), ('5', '5'), ('10', '10'),('50', '50')])
+    #name4 = SelectField('Order results by:', choices=[('first_name',
+            #'First Name'), ('last_name', 'Last Name'), ('city', 'City of Birth')])
     submit = SubmitField('Submit')
 
 
@@ -108,19 +108,26 @@ def internal_server_error(e):
 
 @app.route("/results", methods = ['GET', 'POST'])
 def presults():
-    name1 = session.get('name1')
+    sequence = session.get('sequence')
     name2 = session.get('name2')
     name3 = session.get('name3')
     name4 = session.get('name4')
     form3 = SearchButton_Form()
 
-    searchterm = "%{}%".format(name1) ## adds % wildcards to front & back of search term
-    displayorder = eval('Data.{}'.format(name4))
+    #searchterm = "%{}%".format(name1) ## adds % wildcards to front & back of search term
+   # displayorder = eval('Data.{}'.format(name4))
 
-    if name2 == 'last_name':
-        presults = Data.query.filter(Data.last_name.like(searchterm)).order_by(displayorder).limit(name3).all()
-    else:  ##  if not last_name defaults to first_name
-        presults = Data.query.filter(Data.first_name.like(searchterm)).order_by(displayorder).limit(name3).all()
+    #if name2 == 'last_name':
+
+    item_one = ['1234GT5678', 'Mycobacterium XYZ', 'TCGAACGTCGTACGTAACCCATT', 0.000004]
+    item_two = ['4321GT5678', 'Mycobacterium ABC', 'AATTCCGCGTCGTACGTAACCCATT', 0.00001]
+    item_three = ['5674GT5678', 'Mycobacterium JKL', 'GGTTCACGTCGTACGTAACCCATT', 0.000321]
+    results = [item_one, item_two, item_three]
+
+        #presults = Data.query.filter(Data.last_name.like(searchterm)).order_by(displayorder).limit(name3).all()
+    # else:  ##  if not last_name defaults to first_name
+    #     pass
+        #presults = Data.query.filter(Data.first_name.like(searchterm)).order_by(displayorder).limit(name3).all()
 
     #presults = Data.query.all()
     #presults = Data.query.order_by(Data.first_name).all()
@@ -130,8 +137,7 @@ def presults():
     if request.method == 'POST':
         return redirect('/search')
 
-    return render_template('pres_results.html', presults=presults,\
-     name1=name1,name2=name2,name3=name3,name4=name4,form3=form3)
+    return render_template('pres_results.html', presults=results, form3=form3)
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -143,10 +149,10 @@ def search():
     form = NameForm()
     if form.validate_on_submit():
         if request.method == 'POST':
-           session['name1']  = form.name1.data		# name1 is search term entered in first text box on form
-           session['name2']  = form.name2.data		# name2 is to specify first or last name in search query
-           session['name3']  = form.name3.data		# name3 is to limit the number of results displayed in table
-           session['name4']  = form.name4.data		# name4 is to specify the order of the search results
+           #session['name1']  = form.name1.data		# name1 is search term entered in first text box on form
+           #session['name2']  = form.name2.data		# name2 is to specify first or last name in search query
+           #session['name3']  = form.name3.data		# name3 is to limit the number of results displayed in table
+           #session['name4']  = form.name4.data		# name4 is to specify the order of the search results
 #          return '''<h1>The name1 value is: {}</h1>
 #                  <h1>The name2  value is: {}</h1>'''.format(name1, name2)
            return redirect('/results')
