@@ -6,9 +6,6 @@ from wtforms import StringField, RadioField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from datetime import datetime
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'thequickbrownfrog'
-
 import jinja2
 
 app = Flask(__name__)
