@@ -5,36 +5,27 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from datetime import datetime
-
+from hosts_finder import Hosts_Finder
 import jinja2
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thequickbrownfrog'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
-
 ##*****************************************##
 ## Connect to your local postgres database ##
 ##*****************************************##
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:astuart@localhost/president'
 
-
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
+class NewSearchForm(FlaskForm):
+    submit = SubmitField('New Search')
 
-class SearchButton_Form(FlaskForm):
-    submit = SubmitField('Go To Search')
-
-
-class NameForm(FlaskForm):
-    name2 = RadioField('Search by Virus or Bacteria:', choices=[('virus', 'Virus'), ('Bacteria', 'Bacteria')])
-    name1 = StringField('Enter an Accession number or FASTA sequence:', validators=[DataRequired()])
-    #name3 = SelectField('Limit results by:', choices=[('1', '1'), ('5', '5'), ('10', '10'),('50', '50')])
-    #name4 = SelectField('Order results by:', choices=[('first_name',
-            #'First Name'), ('last_name', 'Last Name'), ('city', 'City of Birth')])
+class SearchForm(FlaskForm):
+    get_id = StringField('Enter the sequence accession number:', validators=[DataRequired()])
     submit = SubmitField('Submit')
-
 
 class Data(db.Model):
     __tablename__ = "president"
@@ -75,13 +66,13 @@ class Data(db.Model):
     def __repr__(self):
         return f"<President {self.last_name}>"
 
-
 @app.route("/", methods =['GET','POST'])
 def index():
-    form2 = SearchButton_Form()
+    search_form = SearchForm()
     if request.method == 'POST':
         return redirect('/search')
-    return render_template("index.html", form2=form2)
+    return render_template('search.html', form=search_form)
+
 
 @app.route('/about')
 def about():
@@ -105,20 +96,11 @@ def internal_server_error(e):
 
 @app.route("/results", methods = ['GET', 'POST'])
 def presults():
-    sequence = session.get('sequence')
-    name2 = session.get('name2')
-    name3 = session.get('name3')
-    name4 = session.get('name4')
-    form3 = SearchButton_Form()
+    new_search_form = NewSearchForm()
 
-    #searchterm = "%{}%".format(name1) ## adds % wildcards to front & back of search term
-   # displayorder = eval('Data.{}'.format(name4))
-
-    #if name2 == 'last_name':
-
-    item_one = ['1234GT5678', 'Mycobacterium XYZ', 'TCGAACGTCGTACGTAACCCATT', 0.000004]
-    item_two = ['4321GT5678', 'Mycobacterium ABC', 'AATTCCGCGTCGTACGTAACCCATT', 0.00001]
-    item_three = ['5674GT5678', 'Mycobacterium JKL', 'GGTTCACGTCGTACGTAACCCATT', 0.000321]
+    item_one = ['Streptomycetaceae', 21]
+    item_two = ['Mycobacteriaceae', 12]
+    item_three = ['Promicromonosporaceae', 6]
     results = [item_one, item_two, item_three]
 
         #presults = Data.query.filter(Data.last_name.like(searchterm)).order_by(displayorder).limit(name3).all()
@@ -134,31 +116,32 @@ def presults():
     if request.method == 'POST':
         return redirect('/search')
 
-    return render_template('pres_results.html', presults=results, form3=form3)
+    return render_template('pres_results.html', presults=results, form3=new_search_form)
 
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    name1 = None
-    name2 = None
-    name3 = None
-    name4 = None
-    form = NameForm()
-    if form.validate_on_submit():
+    search_form = SearchForm()
+    new_search_form = NewSearchForm()
+    if search_form.validate_on_submit():
         if request.method == 'POST':
-           #session['name1']  = form.name1.data		# name1 is search term entered in first text box on form
-           #session['name2']  = form.name2.data		# name2 is to specify first or last name in search query
-           #session['name3']  = form.name3.data		# name3 is to limit the number of results displayed in table
-           #session['name4']  = form.name4.data		# name4 is to specify the order of the search results
-#          return '''<h1>The name1 value is: {}</h1>
-#                  <h1>The name2  value is: {}</h1>'''.format(name1, name2)
-           return redirect('/results')
+            user_input = search_form.get_id.data
+            print("searching database ..... Please be patient")
+            hf = Hosts_Finder(user_input)
+            hf.search()
+            result1 = hf.attp_sequence
+            print("Part 1 Successful! attP sequence: " + result1)
+            result2 = hf.tax_class
+            print("Part 2 Successful! Tax classification")
+            print(result2)
+            result3 = hf.consensus_seq
+            print("Part 3 Successful! Consensus: " + result3)
+            print("Search completed!")
+            return render_template('pres_results.html', result1=result1, result2=result2, result3=result3, form3=new_search_form)
 
-        form.name1.data = ''	## Reset form values
-        form.name2.data = ''
-        form.name3.data = ''
-        form.name4.data = ''
-    return render_template('search.html', form=form) 
+        search_form.get_id.data = ''
+
+    return render_template('search.html', form=search_form)
 
 if __name__ == "__main__":
     app.run(debug=True)

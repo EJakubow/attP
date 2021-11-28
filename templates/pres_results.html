@@ -3,56 +3,47 @@
 
 {% block title %}Presidents Database Search Results{% endblock %}
 {% block page_content %}
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>....</title>
   <meta charset="utf-8">
+</head>
+
+
 <div class="page-header">
+
+</div>
+<div class="container">
   <body>
     <h1> attp Search Results </h1>
     <p> Esther Jakubowicz </p>
-</div>
-</head>
-<div class="container">
-<!--Value of form variables:-->
-<!--<p>-->
-<!--name1= {{name1}}-->
-<!--<p>-->
-<!--name2= {{name2}}-->
-<!--<p>-->
-<!--name3= {{name3}}-->
-<!--<p>-->
-<!--name4= {{name4}}-->
-<!--<p>-->
 
-<h2>Results </h2>
-
-<div class="table-responsive">
-  <table class="table">
+<HR>
+    <h4> <b> attP Sequence</b></h4>
+    <p> {{ result1 }} </p>
+    <p></p>
+<div>
+  <table class="table" width=300px>
     <thead class="thead-dark">
       <tr>
-        <th>Accession Number</th>
-        <th>Name</th>
-        <th>attp Sequence</th>
-        <th>Score</th>
+        <th>Taxonomy Family</th>
+        <th>Total Hits</th>
          </tr>
     </thead>
     <tbody>
-       {% for item in presults %}
+    {% for key, value in result2.items() %}
            <tr>
-             <td>{{ item[0] }}</td>
-             <td>{{ item[1] }}</td>
-             <td>{{ item[2] }}</td>
-             <td>{{ item[3] }}</td>
-
+             <td>{{ key }}</td>
+             <td>{{ value }}</td>
            </tr>
-        {% endfor %}
+    {% endfor %}
    </tbody>
   </table>
 </div>
-</div>
+        <h4> <b>Consensus Sequence</b></h4>
+    <p> {{ result3 }} </p>
 </body>
+</div>
 
 {{ wtf.quick_form(form3) }}
 {% endblock %}
