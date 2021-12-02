@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Search Presidents{% endblock %}
+
+{% block page_content %}
+<div class="page-header text-center">
+    <h2 class="mt-2"> attP/attB Search </h2>
+    <body>
+
+    <div class = "container" style="max-width: 600px">
+        <div id="headsup" style="display:block"   class="text-center pb-4 pt-4">
+            <div class="alert alert-danger  pb-4 pt-4">
+                <h1>Heads Up!</h1>
+                <h2> This process may take several minutes. </h2>
+                <h2> Please be patient. </h2>
+            </div>
+
+
+            <h4 class="mt-4"> Press Start Search to continue. </h4>
+            <div style="text-align:center">
+                <center>
+                    <button id="start" onclick="startSearch()" class="btn-dark" style="display:block">
+                        Start search!
+                    </button>
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <div id="inProgress" class = "container" style="max-width: 600px; display:none">
+            <div class="alert alert-danger text-center pb-4 pt-4">
+                <h1> Search in progress </h1>
+                <h2> Do not navigate away from this page!</h2>
+        </div>
+
+        <div style="text-align: center; vertical-align: middle;">
+            <img style="padding-top:40px" src="../static/images/loading.gif" width="100">
+        </div>
+    </div>
+
+    </body>
+</div>
+
+
+
+<!--<form action="{{ url_for('in_progress') }}">-->
+<!--    {{ wtf.quick_form(in_progress_form) }}-->
+<!--</form>-->
+{% endblock %}
+
+
+
