@@ -4,31 +4,57 @@
 
 {% block page_content %}
 <div class="page-header">
+   </p>
+    <br>
     <h1> About My Awesome Bioinformatics Project </h1>
-    <p> <b>- Insert Background Info </b>
+
     <br><br>
         Antibiotic resistance is disseminating into a global crisis. Bacteria are developing immunity to
         most everyday drugs. Overprescribing such drugs, along with a lack of development of new drugs,
         has set the stage where superbugs are now a commonplace occurrence. Consequently, a significant
         amount of research has been redirected to tackle this rising problem. <br>
     <br>
-        Nature offers a natural response to bacteria – Bacteriophages (phages). Phages, aka bacteria-eaters,
-        infect and destroy bacteria cells. But there is one caveat. These phages are very specific to hosts.
-        Hence, host ranges are not easily identifiable. Multiple avenues of explorations, such as viral tagging,
-        wet lab research, and computational methods have been undertaken to assist with phage-host
-        identification. PHage Host Finder aims to assist in the research by providing a resource to predict
-        phage-host interactions more efficiently. This site focuses on a unique feature, the attP/attB site,
-        a homologous sequence present in both phage and bacteria respectively. This site is the attachment site where the phage
-        integrates its DNA into the bacteria. A match between phage and bacteria would indicate the likelihood of a
-        successful phage infection of that host.
+        Nature offers a natural response to bacteria – Bacteriophages (phages). Phages, aka
+        bacteria-eaters, infect and destroy bacteria cells. But there is one caveat. These phages are
+        very specific to hosts. Hence, host ranges are not easily identifiable. Multiple avenues of
+        explorations, such as viral tagging, wet lab research, and computational methods have been
+        undertaken to assist with phage-host identification. Phage Host Finder aims to assist in the
+        research by providing a resource to predict phage-host interactions more efficiently. This
+        site focuses on a unique feature, the attP/attB sites, a homologous sequence present in both
+        temperate phage and bacteria respectively. These sites are the attachment sites where the phage
+        integrates its DNA into the bacteria genome and are frequently found adjacent to the integrase
+        gene in the phage genome and within or near a tRNA gene in the bacterial genome. A match
+        between phage and bacteria would indicate the likelihood of a successful phage infection of
+        that host.
         <br> <br>
-        Summarize the attp-attb process
 
+    </p>
+    <p> <b> Input Format:</b>
+        <br>
+        Phage Host finder currently accepts only accession numbers for nucleotide sequences as inputs.
+        Future updates will include additional options.
+        <br><br>
+        *******Insert screenshot image 1.
+
+    </p>
+    <p> <b> Output Format: </b>
+
+        The results will return a table listing the families in the Actinobacteria phylum that the
+        attP/attB sequence was located in, along with the total number of hits within the families.
+        The more hits within a family, the stronger the likelihood of a familial host match. The
+        results will also include a consensus sequence to highlight the most common nucleotide at
+        each position.</p>
+        <br>
+        Insert screenshot image #2
+        <br><br>
+    <p> If no results are returned, it can be attributed to a few possibilities. This site is currently
+        in its first phase of development and is limited in scope. If the phage hasn't been annotated yet
+        or the attP/attB recognition sequence lies further away from the integrase gene, this site currently
+        does not have the capabilities of recognizing those variations. Another possibility to consider is
+        that the phage may not be temperate one, and therefore doesn't possess this mechanism of integration.
 
 
     </p>
-    <p> - Insert site tutorial.  Describe input and outputs  </p>
-    <p> - Insert site example </p>
     <p> - Insert project / RCNJ footer</p>
 </div>
 {% endblock %}

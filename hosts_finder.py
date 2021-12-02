@@ -18,8 +18,8 @@ from collections import Counter
 class Hosts_Finder():
     def __init__(self, user_input):
         self.user_input = user_input
-        self.integrase = ['Integrase (Y-int)', 'Integrase', 'Tyrosine Integrase', 'serine integrase', 'Integrase (S-int)',
-                  'Serine Integrase', 'tyrosine integrase']
+        #self.integrase = ['Integrase (Y-int)', 'Integrase', 'Tyrosine Integrase', 'serine integrase', 'Integrase (S-int)',
+                  #'Serine Integrase', 'tyrosine integrase', 'Integrase, (S-int)']
         Entrez.email = "efgjakubo@gmail.com"
         E_VALUE_THRESH = 1e-12
         self.attp_sequence = ''
@@ -45,15 +45,16 @@ class Hosts_Finder():
         return result_handle
 
     def map_location(self, result_handle):
+        integrase_gene = 'integrase'
         for record in SeqIO.parse(result_handle, "genbank"):
             for f in record.features:
-                if f.type == "CDS" and "gene" in f.qualifiers:
-                    gene = f.qualifiers['gene'][0]
-                    for i in self.integrase:
-                        if f.qualifiers["product"][0] == i:
-                            my_start = f.location._start.position
-                            my_end = f.location._end.position + 400
-                            return [my_start, my_end]
+                if f.type == "CDS":
+                    # print(f.qualifiers["product"][0])
+                    product = f.qualifiers["product"][0]
+                    if integrase_gene.upper() in product.upper():
+                        my_start = f.location._start.position
+                        my_end = f.location._end.position + 400
+                        return [my_start, my_end]
 
     def blast(self, id, positions):
         result_handle = NCBIWWW.qblast("blastn", "nt", id, entrez_query='txid201174[ORGN]', query_from=positions[0], query_to=positions[1])
@@ -65,32 +66,41 @@ class Hosts_Finder():
             saved_xml_file.write(blast_results)
         return saved_xml_file
 
-    def get_attp(self, saved_xml_file):  #change variable to filename?
+    def get_attp(self, saved_xml_file):
         test=0
         accession_out = open("accession_out.txt", 'w')
         query_out = open("query_out.fasta", 'w')
 
-        for record in NCBIXML.parse(open(saved_xml_file)):
+        for record in NCBIXML.parse(open("blast_results.xml")):
             for align in record.alignments:
-                # print("Accession number:", align.accession)
                 accession_out.write(align.accession + '\n')
-                # print("match: %s " % align.title[:100])
                 for hsp in align.hsps:
                     # if hsp.expect < E_VALUE_THRESH:
                     if hsp.identities < 75:
-                        # print("\n\n*Alignment*")
-                        # print("sequence:", align.title)
-                        # print("identities:", hsp.identities)
-                        # print("e value:", hsp.expect)
-                        # print(hsp.query[0:75] + "...")
-                        # print(hsp.match[0:75] + "...")
-                        # print(hsp.sbjct[0:75] + "...")
+                        #                print("\n\n*Alignment*")
+                        #                print("sequence:", align.title)
+                        #                print("identities:", hsp.identities)
+                        #                print("e value:", hsp.expect)
+                        #                print(hsp.query[0:75] + "...")
+                        #                print(hsp.match[0:75] + "...")
+                        #                print(hsp.sbjct[0:75] + "...")
+
                         test += 1
                         query_out.write('>Test' + str(test) + '\n' + hsp.query[0:75] + '\n')
 
-                    attp_sequence = hsp.query[0:75]  # replace with code to capture true sequence
-        accession_out.close()
+                attp_sequence = hsp.query[0:75]  # replace with code to capture true sequence
+
         query_out.close()
+        sequences = [s for s in SeqIO.parse('query_out.fasta', 'fasta')]
+        max_len = max([len(s.seq) for s in sequences])
+        GAPS = '-'
+        for seq in sequences:
+            padding = GAPS * (max_len - len(seq.seq))
+            seq.seq += padding
+
+        SeqIO.write(sequences, 'query_out.fasta', 'fasta')
+
+        accession_out.close()
         # print('count HSP = ', count)
         # print('count total = ', count_total, '\n')
         return attp_sequence
@@ -126,11 +136,10 @@ class Hosts_Finder():
                     tax_class = tax_element['ScientificName']
                     taxonomy.append(tax_class)
 
-            #taxonomy_dict = Counter(taxonomy)
-            #sort_taxonomy = sorted(taxonomy_dict.items(), key=lambda x: x[1], reverse=True)
+            taxonomy_dict = Counter(taxonomy)
+            sorted_taxonomy = dict(sorted(taxonomy_dict.items(), key=lambda x: x[1], reverse=True))
 
-        #return(sort_taxonomy)
-        return(Counter(taxonomy))
+        return sorted_taxonomy
 
     def get_consensus(self, filename):
         alignment = AlignIO.read(open(filename), "fasta")
@@ -145,15 +154,15 @@ class Hosts_Finder():
         self.save_file('blast_results', result_handle)
         self.attp_sequence = self.get_attp("blast_results.xml")
         self.tax_class = self.get_tax_id("accession_out.txt")
-        self.consensus_seq = self.get_consensus('query_out_2.fasta')
+        self.consensus_seq = self.get_consensus('query_out.fasta')
 
 
 
-# user_input = "Z18946"
+# user_input = "MK660712"
 # print('starting search...')
 # hf = Hosts_Finder(user_input)
 # hf.search()
-#
+# #
 # print(hf.attp_sequence)
 # print(hf.tax_class)
 # print(hf.consensus_seq)

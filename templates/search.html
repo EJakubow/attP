@@ -4,23 +4,55 @@
 {% block title %}Search Presidents{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>Phage Host Finder</h1>
-<br>
-  <body>
-    <p> Phage Host Finder?? provides a tool to predict phage-host relationships through the use of the attP/attB recognition sequences.
-<br>
-        <br>
-This website was designed to assist in identifying hosts for bacteriophages (phages). Phages are nature’s
-        natural tools to combat bacteria, but the bacterial host ranges are not easily identifiable. This site’s
-        objective is to boost the ongoing research by offering a computational tool to more quickly and
-        more efficiently predict phage-host interactions.
 
- </p>
+<div class="page-header">
+    <h1 class="mt-2">Phage Host Finder</h1>
     <br>
-    <h2> attP/attB Search </h2>
-  </body>
+    <body>
+
+    <div class = "container">
+        <div class = "row"   style="border:solid 0px red">
+
+        </div>
+        <div class = "row" style="border:solid 0px green">
+
+            <div class = "col-9" style="border:solid 0px blue">
+
+            <p> Phage Host Finder?? provides a tool to predict phage-host relationships through the use of the attP/attB recognition sequences.
+                <br>
+                <br>
+                This website was designed to assist in identifying hosts for bacteriophages (phages). Phages are nature’s
+                natural tools to combat bacteria, but the bacterial host ranges are not easily identifiable. This site’s
+                objective is to boost the ongoing research by offering a computational tool to more quickly and
+                more efficiently predict phage-host interactions.
+
+            </p>
+                <p> This project is currently in its first phase of development and is limited to finding
+                hosts in the Actinobacteria phylum.</p>
+
+
+                <div class = "container" style="max-width:400px; align-text:left">
+                    <h2> attP/attB Search </h2>
+                    {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+
+            <div class = "pl-2 pt-1 col-3"  style="border:solid 0px blue; background-color:#FFF8DC">
+                <h2> References </h2>
+                <p>
+                    <ul>
+                     <li> item 1 </li>
+                     <li> item 2 </li>
+                     <li> item 3 </li>
+                    </ul>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
 </div>
-{{ wtf.quick_form(form) }}
 {% endblock %}
+
 

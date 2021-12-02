@@ -21,11 +21,14 @@ db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
 class NewSearchForm(FlaskForm):
-    submit = SubmitField('New Search')
+    submit = SubmitField('New Search', render_kw={'class':'btn btn-dark'} )
 
 class SearchForm(FlaskForm):
     get_id = StringField('Enter the sequence accession number:', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Submit', render_kw={'class':'btn btn-dark'})
+
+class InProgressForm(FlaskForm):
+    submit = SubmitField('Let\'s go!')
 
 class Data(db.Model):
     __tablename__ = "president"
@@ -66,6 +69,8 @@ class Data(db.Model):
     def __repr__(self):
         return f"<President {self.last_name}>"
 
+user_input = ""
+
 @app.route("/", methods =['GET','POST'])
 def index():
     search_form = SearchForm()
@@ -94,54 +99,39 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
-@app.route("/results", methods = ['GET', 'POST'])
-def presults():
-    new_search_form = NewSearchForm()
-
-    item_one = ['Streptomycetaceae', 21]
-    item_two = ['Mycobacteriaceae', 12]
-    item_three = ['Promicromonosporaceae', 6]
-    results = [item_one, item_two, item_three]
-
-        #presults = Data.query.filter(Data.last_name.like(searchterm)).order_by(displayorder).limit(name3).all()
-    # else:  ##  if not last_name defaults to first_name
-    #     pass
-        #presults = Data.query.filter(Data.first_name.like(searchterm)).order_by(displayorder).limit(name3).all()
-
-    #presults = Data.query.all()
-    #presults = Data.query.order_by(Data.first_name).all()
-    #presults = Data.query.filter(Data.last_name == name1).order_by(Data.last_name).all()
-    #presults = Data.query.filter_by(Data.last_name.like(searchterm)).order_by(displayorder).all()
-
-    if request.method == 'POST':
-        return redirect('/search')
-
-    return render_template('pres_results.html', presults=results, form3=new_search_form)
-
-
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    global user_input
     search_form = SearchForm()
-    new_search_form = NewSearchForm()
+    in_progress_form = InProgressForm()
     if search_form.validate_on_submit():
         if request.method == 'POST':
             user_input = search_form.get_id.data
-            print("searching database ..... Please be patient")
-            hf = Hosts_Finder(user_input)
-            hf.search()
-            result1 = hf.attp_sequence
-            print("Part 1 Successful! attP sequence: " + result1)
-            result2 = hf.tax_class
-            print("Part 2 Successful! Tax classification")
-            print(result2)
-            result3 = hf.consensus_seq
-            print("Part 3 Successful! Consensus: " + result3)
-            print("Search completed!")
-            return render_template('pres_results.html', result1=result1, result2=result2, result3=result3, form3=new_search_form)
+            print('user input is ', user_input)
+            print("initiating search ..... waiting for user to continue")
+            return render_template('in_progress.html', in_progress_form = in_progress_form)
 
         search_form.get_id.data = ''
 
     return render_template('search.html', form=search_form)
+
+@app.route('/in_progress', methods=['GET', 'POST'])
+def in_progress():
+    global user_input
+    new_search_form = NewSearchForm()
+    print("database search in progress ..... Please be patient")
+    hf = Hosts_Finder(user_input)
+    hf.search()
+    result1 = hf.attp_sequence
+    print("Part 1 Successful! attP sequence: " + result1)
+    result2 = hf.tax_class
+    print("Part 2 Successful! Tax classification")
+    print(result2)
+    result3 = hf.consensus_seq
+    print("Part 3 Successful! Consensus: " + result3)
+    print("Search completed!")
+    return render_template('pres_results.html', result1=result1, result2=result2, result3=result3, form3=new_search_form)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
