@@ -64,6 +64,8 @@ class Hosts_Finder():
         return result_handle
 
     def save_file(self, filename, result_handle):
+        if os.path.exists(filename):
+            os.remove(filename)
         with open(filename+'.xml', 'w') as saved_xml_file:
             blast_results = result_handle.read()
             saved_xml_file.write(blast_results)
@@ -71,6 +73,8 @@ class Hosts_Finder():
 
     def get_attp(self, saved_xml_file):
         test=0
+        if os.path.exists("accession_out.txt"):
+            os.remove("accession_out.txt")
         accession_out = open("accession_out.txt", 'w')
         if os.path.exists("query_out.fasta"):
             os.remove("query_out.fasta")
@@ -160,6 +164,15 @@ class Hosts_Finder():
         self.attp_sequence = self.get_attp("blast_results.xml")
         self.tax_class = self.get_tax_id("accession_out.txt")
         self.consensus_seq = self.get_consensus('query_out.fasta')
+
+    def cleanup(self):
+        if os.path.exists("blast_results.xml"):
+            os.remove("blast_results.xml")
+        if os.path.exists("accession_out.txt"):
+            os.remove("accession_out.txt")
+        if os.path.exists("query_out.fasta"):
+            os.remove("query_out.fasta")
+
 
 
 

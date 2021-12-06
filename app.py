@@ -1,19 +1,14 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, RadioField, SubmitField, SelectField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-from datetime import datetime
 from hosts_finder import Hosts_Finder
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thequickbrownfrog'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
-##*****************************************##
-## Connect to your local postgres database ##
-##*****************************************##
 
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:astuart@localhost/president'
