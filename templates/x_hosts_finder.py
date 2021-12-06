@@ -59,11 +59,11 @@ class Hosts_Finder():
         result_handle = NCBIWWW.qblast("blastn", "nt", id, entrez_query='txid201174[ORGN]', query_from=positions[0], query_to=positions[1])
         return result_handle
 
-    def save_file(self, filename, result_handle):
-        with open(filename+'.xml', 'w') as saved_xml_file:
-            blast_results = result_handle.read()
-            saved_xml_file.write(blast_results)
-        return saved_xml_file
+    # def save_file(self, filename, result_handle):
+    #     with open(filename+'.xml', 'w') as saved_xml_file:
+    #         blast_results = result_handle.read()
+    #         saved_xml_file.write(blast_results)
+    #     return saved_xml_file
 
     def get_attp(self, saved_xml_file):  #change variable to filename?
         test=0

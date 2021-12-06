@@ -12,6 +12,7 @@ from Bio.Align import AlignInfo
 import re
 import collections
 from collections import Counter
+import os
 
 
 
@@ -38,6 +39,8 @@ class Hosts_Finder():
         return handle
 
     def write_file(self, filename, handle):
+        if os.path.exists(filename):
+            os.remove(filename)
         with open(filename, 'w') as out_handle:
             out_handle.write(handle.read())
         handle.close()
@@ -69,9 +72,11 @@ class Hosts_Finder():
     def get_attp(self, saved_xml_file):
         test=0
         accession_out = open("accession_out.txt", 'w')
+        if os.path.exists("query_out.fasta"):
+            os.remove("query_out.fasta")
         query_out = open("query_out.fasta", 'w')
 
-        for record in NCBIXML.parse(open("blast_results.xml")):
+        for record in NCBIXML.parse(open(saved_xml_file)):
             for align in record.alignments:
                 accession_out.write(align.accession + '\n')
                 for hsp in align.hsps:
