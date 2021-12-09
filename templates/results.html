@@ -36,13 +36,17 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-12 text-center">
             <h4>Consensus Sequence</h4>
-            <p> {{ result3 }} </p>
+            <p>
+                <span> {{ result3["start_seq"] }}</span>
+                <span class="core-nt"> {{ result3["core_nt"] }}</span>
+                <span> {{ result3["end_seq"] }}</span>
+            </p>
         </div>
     </div>
 
-    <div class="row" style="padding-bottom:20px">
+    <div class="row text-center" style="padding-bottom:20px">
         <div class="col-md-4 col-md-offset-4">
             <form action = "{{ url_for('search') }}" >
                 {{ wtf.quick_form(form3) }}

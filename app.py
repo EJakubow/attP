@@ -70,7 +70,7 @@ def in_progress():
     print("Part 2 Successful! Tax classification")
     print(result2)
     result3 = hf.consensus_seq
-    print("Part 3 Successful! Consensus: " + result3)
+    print("Part 3 Successful! Consensus core_nt: " + result3["core_nt"])
     print("Search completed!")
     hf.cleanup()
     return render_template('results.html', result1=result1, result2=result2, result3=result3, form3=new_search_form)

@@ -39,14 +39,16 @@ Phage Hosts{% endblock %}
         {% block page_content %}{% endblock %}
     </div>
     {% block footer %}
-    <footer class="footer"><div>&copy; <img src="../static/images/RCNJ.png" width="100">
-    </div>
-    <div><address> &nbsp Authors: Esther Jakubowicz <a href="mailto:ejakubow@ramapo.edu">ejakubow@ramapo.edu</a>
-           Dr. Ash Stuart <a href="mailto:astuart@ramapo.edu">astuart@ramapo.edu</a> </address>
-    </div>
-
+    <footer class="footer">
+        <div class="copyright">&copy; <img src="../static/images/RCNJ.png" width="100"></div>
+        <div class="email-addresses text-right">
+            <address> &nbsp Authors: Esther Jakubowicz <a href="mailto:ejakubow@ramapo.edu">ejakubow@ramapo.edu</a>
+               Dr. Ash Stuart <a href="mailto:astuart@ramapo.edu">astuart@ramapo.edu</a> </address>
+        </div>
     </footer>
+
     <link href="../static/css/sticky-footer.css" rel="stylesheet">
+    <link href="../static/css/styles.css" rel="stylesheet">
     {% endblock %}
 {% endblock %}
 

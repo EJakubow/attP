@@ -168,12 +168,15 @@ class Hosts_Finder():
                 start = pos[0]
                 end = pos[1]
 
-                MY_COLOR = '\033[31m'
-                ENDC = '\033[0m'
+                start_seq = sequence[:start]
+                core_nt = sequence[start:end]
+                end_seq = sequence[end:]
 
-                seq_color = (sequence[:start] + MY_COLOR + sequence[start:end] + ENDC + sequence[end:])
-
-        return seq_color
+        return {
+            "start_seq": start_seq,
+            "core_nt": core_nt,
+            "end_seq": end_seq
+            }
 
     def search(self):
         handle = self.fetch_data_from_entrez(self.user_input)
