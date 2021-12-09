@@ -6,40 +6,32 @@
 {% block page_content %}
 <div class="page-header text-center">
     <h2 class="mt-2"> attP/attB Search </h2>
-    <body>
-
-    <div class = "container" style="max-width: 600px">
-        <div id="headsup" style="display:block"   class="text-center pb-4 pt-4">
-            <div class="alert alert-danger  pb-4 pt-4">
-                <h1>Heads Up!</h1>
-                <h2> This process may take several minutes. </h2>
-                <h2> Please be patient. </h2>
-            </div>
-
-
-            <h4 class="mt-4"> Press Start Search to continue. </h4>
-            <div style="text-align:center">
-                <center>
-                    <button id="start" onclick="startSearch()" class="btn-dark" style="display:block">
-                        Start search!
-                    </button>
-                </center>
-            </div>
+    <div class="container" id="headsup">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            <strong>Heads Up!</strong> This process may take several minutes.
+        </div>
+        <div class="mt-4 lead text-center"> Click the proceed button below to continue:</div>
+        <div class="text-center">
+            <button id="start" onclick="startSearch()" class="btn btn-lg btn-primary">
+                Proceed!
+            </button>
         </div>
     </div>
 
     <div id="inProgress" class = "container" style="max-width: 600px; display:none">
-            <div class="alert alert-danger text-center pb-4 pt-4">
-                <h1> Search in progress </h1>
-                <h2> Do not navigate away from this page!</h2>
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                <span>Search in progress</span>
+                <strong>Do not navigate away from this page!</strong>
         </div>
-
         <div style="text-align: center; vertical-align: middle;">
             <img style="padding-top:40px" src="../static/images/loading.gif" width="100">
         </div>
     </div>
-
-    </body>
 </div>
 
 {% endblock %}

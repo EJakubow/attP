@@ -154,7 +154,26 @@ class Hosts_Finder():
         alignment = AlignIO.read(open(filename), "fasta")
         summary_align = AlignInfo.SummaryInfo(alignment)
         consensus = summary_align.dumb_consensus()
-        return consensus
+
+        sequence = str(consensus)
+        pattern = re.compile("([^xX]+)")
+
+        max_sequence_length = 0
+
+        for match in re.finditer(pattern, sequence):
+            result = match.group()
+            if len(result) > max_sequence_length:
+                max_sequence_length = len(result)
+                pos = match.span()
+                start = pos[0]
+                end = pos[1]
+
+                MY_COLOR = '\033[31m'
+                ENDC = '\033[0m'
+
+                seq_color = (sequence[:start] + MY_COLOR + sequence[start:end] + ENDC + sequence[end:])
+
+        return seq_color
 
     def search(self):
         handle = self.fetch_data_from_entrez(self.user_input)

@@ -17,11 +17,11 @@ app.config['SECRET_KEY'] = 'thequickbrownfrog'
 bootstrap = Bootstrap(app)
 
 class NewSearchForm(FlaskForm):
-    submit = SubmitField('New Search', render_kw={'class':'btn btn-dark'} )
+    submit = SubmitField('New Search')
 
 class SearchForm(FlaskForm):
     get_id = StringField('Enter the sequence accession number:', validators=[DataRequired()])
-    submit = SubmitField('Submit', render_kw={'class':'btn btn-dark'})
+    submit = SubmitField('Submit')
 
 class InProgressForm(FlaskForm):
     submit = SubmitField('Let\'s go!')
@@ -29,23 +29,6 @@ class InProgressForm(FlaskForm):
 user_input = ""
 
 @app.route("/", methods =['GET','POST'])
-def index():
-    search_form = SearchForm()
-    if request.method == 'POST':
-        return render_template('search.html', form=search_form)
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.errorhandler(400)
-def bad_request(e):
-    return render_template('400.html'), 400
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('500.html'), 500
-
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     global user_input
@@ -61,6 +44,18 @@ def search():
         search_form.get_id.data = ''
 
     return render_template('search.html', form=search_form)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.errorhandler(400)
+def bad_request(e):
+    return render_template('400.html'), 400
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 @app.route('/in_progress', methods=['GET', 'POST'])
 def in_progress():

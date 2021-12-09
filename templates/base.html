@@ -4,26 +4,28 @@
 Phage Hosts{% endblock %}
 
 {% block navbar %}
-<div class="container">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ml-4 pl-4">
-      <a class="pl-4 ml-4 navbar-brand"> &nbsp; &nbsp; &nbsp; Phage Hosts</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/search">Search</a>
-            </li>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Phage Hosts</a>
+          </div>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-            </li>
-    </ul>
-  </div>
-</nav>
-    </div>
-
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/search">Search <span class="sr-only">(current)</span></a></li>
+              <li><a href="/about">About</a></li>
+            </ul>
+          </div>
+        </div>
+    </nav>
 {% endblock %}
 
 {% block content1 %}
@@ -33,9 +35,19 @@ Phage Hosts{% endblock %}
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    {% block page_content %}{% endblock %}
-</div>
+    <div class="container">
+        {% block page_content %}{% endblock %}
+    </div>
+    {% block footer %}
+    <footer class="footer"><div>&copy; <img src="../static/images/RCNJ.png" width="100">
+    </div>
+    <div><address> &nbsp Authors: Esther Jakubowicz <a href="mailto:ejakubow@ramapo.edu">ejakubow@ramapo.edu</a>
+           Dr. Ash Stuart <a href="mailto:astuart@ramapo.edu">astuart@ramapo.edu</a> </address>
+    </div>
+
+    </footer>
+    <link href="../static/css/sticky-footer.css" rel="stylesheet">
+    {% endblock %}
 {% endblock %}
 
 {% block scripts %}

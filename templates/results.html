@@ -4,52 +4,51 @@
 {% block title %}Phage Search Results{% endblock %}
 {% block page_content %}
 
-<body>
-
-<div class="container" style="max-width: 600px">
-
-    <h2 class="mt-2"> attp Search Results </h2>
-
-    <p> some very random text will this show up?</p>
-
+<div class="">
+    <h2 class="page-header text-center"> attp Search Results </h2>
     <div class="card pl-2 ml-2" style="display:none">
-        <h4 class="card-title ml-2 pb-1"> attP Sequence </h4>
+        <h4> attP Sequence </h4>
         <p class="card-text ml-2 pb-2"> {{ result1 }} </p>
     </div>
 
-
-    <div class="card mt-2 pl-2 ml-2" >
-        <h4 class="card-title pl-2 pb-1">Taxonomy Results</h4>
-        <div class="card-body">
-            <table class="table" style="max-width:300px">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Taxonomy Family</th>
-                    <th>Total Hits</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for key, value in result2.items() %}
-                <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ value }}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h4>Taxonomy Results</h4>
+            <div>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Taxonomy Family</th>
+                        <th>Total Hits</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key, value in result2.items() %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="card mt-2 pl-2 ml-2">
-        <h4 class="card-title pb-1 ml-2">Consensus Sequence</h4>
-        <p class="card-text ml-2 pb-2"> {{ result3 }} </p>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h4>Consensus Sequence</h4>
+            <p> {{ result3 }} </p>
+        </div>
+    </div>
+
+    <div class="row" style="padding-bottom:20px">
+        <div class="col-md-4 col-md-offset-4">
+            <form action = "{{ url_for('search') }}" >
+                {{ wtf.quick_form(form3) }}
+            </form>
+        </div>
     </div>
 </div>
-</div>
 
-
-<form action = "{{ url_for('search') }}" >
-    {{ wtf.quick_form(form3) }}
-</form>{% endblock %}
-
-</body>
+{% endblock %}

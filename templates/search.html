@@ -5,54 +5,50 @@
 
 {% block page_content %}
 
-<div class="page-header">
-    <h1 class="mt-2">Phage Host Finder</h1>
-    <br>
-    <body>
+<div class="page-header"><h1>Phage Host Finder</h1></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div>
+                <p class="lead">Phage Host Finder provides a tool to predict phage-host relationships
+                through the use of the attP/attB recognition sequences.</p>
+            </div>
 
-    <div class = "container">
-        <div class = "row"   style="border:solid 0px red">
-
-        </div>
-        <div class = "row" style="border:solid 0px green">
-
-            <div class = "col-9" style="border:solid 0px blue">
-
-            <p> Phage Host Finder?? provides a tool to predict phage-host relationships through the use of the attP/attB recognition sequences.
-                <br>
-                <br>
-                This website was designed to assist in identifying hosts for bacteriophages (phages). Phages are nature’s
+            <div>
+                <p>This website was designed to assist in identifying hosts for bacteriophages (phages). Phages are nature’s
                 natural tools to combat bacteria, but the bacterial host ranges are not easily identifiable. This site’s
                 objective is to boost the ongoing research by offering a computational tool to more quickly and
-                more efficiently predict phage-host interactions.
+                more efficiently predict phage-host interactions.</p>
+            </div>
 
-            </p>
-                <p> This project is currently in its first phase of development and is limited to finding
+            <div>
+                <p>This project is currently in its first phase of development and is limited to finding
                 hosts in the Actinobacteria phylum.</p>
-
-
-                <div class = "container" style="max-width:400px; align-text:left">
-                    <h2> attP/attB Search </h2>
-                    {{ wtf.quick_form(form) }}
-                </div>
             </div>
+        </div>
 
-            <div class = "pl-2 pt-1 col-3"  style="border:solid 0px blue; background-color:#FFF8DC">
-                <h2> References </h2>
-                <p>
-                    <ul>
-                     <li> item 1 </li>
-                     <li> item 2 </li>
-                     <li> item 3 </li>
-                    </ul>
-                </p>
+        <div class ="col-md-3"  style="background-color:#FFF8DC">
+            <h2> References </h2>
+            <div>
+                <ul>
+                <li> <a href="https://www.ncbi.nlm.nih.gov/nuccore"> NCBI </a> </li>
+                <li> <a href="https://phagesdb.org"> Actinobacteriophage Database </a>  </li>
+                <li> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6784059"> Antibiotics Alternatives </a> </li>
+                <li> <a href="https://pubmed.ncbi.nlm.nih.gov/14687564"> Phage Integrases </a>  </li>
+                </ul>
             </div>
-
         </div>
     </div>
-
-</body>
+    <div class="row well">
+        <div class="container col-12">
+            <div class="col-md-4 col-md-offset-4">
+            <h2> attP/attB Search </h2>
+            {{ wtf.quick_form(form) }}
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
 
 
