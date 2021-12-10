@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/pres_flask_postgres_template.iml" filepath="$PROJECT_DIR$/.idea/pres_flask_postgres_template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/phages_app.iml" filepath="$PROJECT_DIR$/.idea/phages_app.iml" />
     </modules>
   </component>
 </project>
