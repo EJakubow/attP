@@ -23,9 +23,20 @@ html {
 .email-addresses {
     padding-right:15px;
     float: right;
+    margin-top: -10px;
 }
 
 .copyright {
     float: left;
+}
+
+.author {
+    display:inline-block;
+    margin-right: 20px;
+    text-align: left;
+}
+
+.glyphicon-envelope:before {
+    padding-right: 8px;
 }
 
