@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -9,10 +8,6 @@ from hosts_finder import Hosts_Finder
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thequickbrownfrog'
-
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:astuart@localhost/president'
-# db = SQLAlchemy(app)
 
 bootstrap = Bootstrap(app)
 
@@ -37,7 +32,6 @@ def search():
     if search_form.validate_on_submit():
         if request.method == 'POST':
             user_input = search_form.get_id.data
-            print('user input is ', user_input)
             print("initiating search ..... waiting for user to continue")
             return render_template('in_progress.html', in_progress_form = in_progress_form)
 
@@ -77,5 +71,5 @@ def in_progress():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
