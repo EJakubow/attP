@@ -10,3 +10,14 @@ function startSearch() {
 
     window.location.href = "/in_progress";
 }
+
+$(document).ready(function() {
+    $.each($('.navbar').find('li'), function() {
+        const pathname = window.location.pathname;
+        $(this).toggleClass('active',
+            pathname.indexOf($(this).find('a').attr('href')) > -1);
+        if(pathname === '/') {
+            $('.navbar .search').addClass("active")
+        };
+    });
+});

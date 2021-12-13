@@ -1,1 +1,1 @@
-web: gunicorn get_pres:app
+web: gunicorn app:app
