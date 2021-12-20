@@ -68,7 +68,7 @@ class Hosts_Finder():
 
     #parses the blast results
     #extracts the accession numbers and writes them to the accession_out.txt file
-    #extracts the hsp that are <0.01 and <75 base pairs and write them to the query_out.txt file
+    #extracts the hsp query results that are <0.01 and <75 base pairs and write them to the query_out.txt file
     def get_attp(self, saved_xml_file):
         test=0
         if os.path.exists("accession_out.txt"):
