@@ -13,8 +13,18 @@ git clone https://github.com/EJakubow/attP.git
 ## create a new virtual environment in the pres_flask_postgres_template directory
 python3 -m venv venv
 
-## activate the virtual environment
-source venv/bin/activate
+### Activate the virtual environment
+`source venv/bin/activate`
+
+### Install the required packages for this app
+pip3 install -r requirements.txt
+
+## Run the application
+In your terminal, `cd` into the root directory and type
+`./start.sh`
+
+## View the application
+Visit http://127.0.0.1:5000/ in your browser
 
 ## if you want to deactivate when your finished<p>
 type deactivate to exit virtual enviro
@@ -35,6 +45,5 @@ http://127.0.0.1:5000/
 
 type control c in terminal window to quit
 
-# Working Example of this application can be found at
-
+# Working example of this application is available at
 https://phage-hosts.herokuapp.com/
