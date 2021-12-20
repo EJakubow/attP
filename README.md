@@ -8,6 +8,7 @@ Clone the repo to a designated directory on your computer
 
 ### Create a new virtual environment in the root directory
 `python3 -m venv venv`
+
 Note: This application was developed in Python 3.8.
 It is recommended to ensure your virtual env is running on the same version.
 Backwards compatibility is not guaranteed.
